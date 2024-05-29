@@ -5,6 +5,7 @@ import java.util.Scanner;
 class WrongStudentName extends Exception { }
 class WrongAge extends Exception { }
 class WrongDate extends Exception { }
+class WrongSwitch extends Exception { }
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
@@ -13,6 +14,8 @@ class Main {
         while(true) {
             try {
                 int ex = menu();
+              if(!ex=0 && !ex=1 && !ex=2 && !ex=3){
+                throw new WrongSwitch();}
                 switch(ex) {
                     case 1: exercise1(); break;
                     case 2: exercise2(); break;
@@ -30,25 +33,28 @@ class Main {
             catch(WrongDate e){
               System.out.println("Błędna data studenta!");
             }
+            catch(WrongSwitch e){
+              System.out.println("Podaj liczbę naturalną!");
+            }
         }
         
     }
 
-    public static int menu() {
+    public static int menu() throws WrongSwitch {
         System.out.println("Wciśnij:");
         System.out.println("1 - aby dodać studenta");
         System.out.println("2 - aby wypisać wszystkich studentów");
         System.out.println("3 - aby wyszukać studenta po imieniu");
         System.out.println("0 - aby wyjść z programu");
-        return scan.nextInt();
-    }
 
+        
     public static String ReadName() throws WrongStudentName {
         scan.nextLine();
         System.out.println("Podaj imie: ");
         String name = scan.nextLine();
         if(name.contains(" "))
             throw new WrongStudentName();
+      
 
         return name;
     }
@@ -62,7 +68,7 @@ class Main {
     }
       public static String ReadDate() throws WrongDate{
         scan.nextLine();
-        System.out.println("Podaj datę urodzienia DD-MM-YYYY: ");
+        System.out.println("Podaj datę urodzienia DD-MM-YYYY:");
         String date = scan.nextLine();
         if(!date.matches("\\d{2}-\\d{2}-\\d{4}"))
             throw new WrongDate();
@@ -71,7 +77,7 @@ class Main {
 
         
       }
-    public static void exercise1() throws IOException, WrongStudentName, WrongAge, WrongDate {
+    public static void exercise1() throws IOException, WrongStudentName, WrongAge, WrongDate{
         var name = ReadName();
         var age = ReadAge();
         var date = ReadDate();
